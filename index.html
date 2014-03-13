@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ProjectPlace</title>
+</head>
+<script type="text/javascript" src="script.js"></script>
+<link rel="stylesheet" href="style.css">
+
+  <body>
+
+  	<header id="banner" >
+  		<div id="banner-wrap" class="body">
+  			<strong>Facebook Page Search</strong> 
+  		</div>
+
+  	</header>
+  	<section id="main" class="body">
+  		<div id="search-input">
+  			<input type="text" id="search" placeholder="Search Facebook pages">
+  			<input type="submit" id="submit">
+          <a href="#" id="searchfav" onclick="viewSearch();">
+            View Search</a>
+        <a href="#" id="favourite" onclick="viewFavourites();">
+        View Favourites</a>
+
+        <!-- <div id="submit-result" class="disable">
+                      <p>Form submitted Successfully</p> 
+                  </div>   -->
+        <span id="error-msg" class="disable">No page found!</span>              
+        <hr>
+  		</div>
+  		<div id="page-info">
+  			<ul id="page-ul">
+
+  			</ul>	
+         <ul id="page-ul-fav" class="hidden">
+
+        </ul> 			
+  		</div>	
+
+  	</section>	
+  </body>
+  </html>
