@@ -1,125 +1,70 @@
+// Application module - hides favourites and search results, can be accessible only through public methods
+var MyApp = (function(){
 
-	var favourites_array = [];
-	var searchResults_array = [];
-var fromFavourites = false;
-var fav = {};
+	var favourites = [];
+	var searchResults = [];
 
-var displayFavs = function(){
-	// console.log("fav called");
-	var node = document.getElementById('page-ul-fav');
-	while (node.hasChildNodes()) {
-		node.removeChild(node.lastChild);
-	}
-	favourites_array.forEach(function(obj){
-		generateAbstractDetails(obj,'page-ul-fav');
-	});
-
-};
-
-	//abstract details
-var generateAbstractDetails = function(jsonData,id_link){
-
-		var name = jsonData.name;
-		var about = jsonData.about;
-		var clickfunc;
-		if(id_link === 'page-abstract')
-			clickfunc = 'onclick="addFavs(this)">Add to Favourites';
-		else
-			clickfunc ='onclick="removeFavs(this)">Remove from Favourites';
-
-		//html snippet to create lists
-		var hearder_html = '<div id="header"><h3>'+name+'</h3><p><span>About : </span>'+about+' </p></div>'
-		var body_html = '<div><div class="sub"><span>Category : </span>'+jsonData.category+'</div><div class="sub"><span>Likes: </span> '+jsonData.likes+'</div><div class="sub"><span> Website : </span> <a target="_blank" href="'+jsonData.website+'">'+jsonData.website+'</a></div></div>';		
-		var end_html = '';
-		var element = document.createElement('li');
-		if(jsonData.cover){
-			end_html = '<div><p><span>Talking about this :</span>'+jsonData.talking_about_count+'</p><img src="'+jsonData.cover.source+'"></div>';
-			element.style.height="500px";
-		}else{
-			element.style.height="250px";
-		}
-		var favourites = '<div id="favouritesLink"><a href="javascript:void(0);" class="favouritesClass" id=fav'+jsonData.id+'>Remove from Favourites</a></div>';
-//		var more = '<a href="#" class="more fav-class"'+clickfunc+' </a> <a href="#" class="more" onclick="moreDetails(this);return false;">Find More</a>';
-		var more = '<a href="javascript:void(0);" class="more fav-class"'+clickfunc+' </a> ';
-		var html = hearder_html + body_html+end_html+more;
-
-		// var element = document.createElement('li');
-		element.id = 'favli'+jsonData.id;
-		element.innerHTML = html;
-		document.getElementById(id_link).appendChild(element);
-		
-		var favelements = document.getElementsByClassName('favouritesClass');
-
-/*		var favouritesHandler = function(){
-			var id = this.id.substring(3);
-			console.log(id + " Favourites");
-			if(this.innerText === 'Add to Favourites'){
-				this.innerText = "Remove from Favourites";
-				console.log("inside favourites handler");
-			}else{
-				console.log("inside favourites handler");
-				removeFromFavs(id);
-				displayFavs();
-			}
-			fromFavourites = true;
-			 var url = 'https://graph.facebook.com/'+this.id.substring(3)+'?callback=jsonpDetailed';
-			 makeJSONPRequest(url,"individual");
-		}
-
-		for (var i = 0; i < favelements.length; ++i) {
-			favelements[i].onclick = favouritesHandler;
-		}*/
-};
-
-
+	var init = function(){
+		favourites = [];
+		searchResults = [];
+		document.querySelector('#searchfav').style.textDecoration = "none";
+	};
 
 	var removeFromFavs = function(id){
-		favourites_array.forEach(function(ele){
+		favourites.forEach(function(ele){
 			if(ele.id === id){
-				var element = document.getElementById('alink'+id);
-				element.innerText = "Add to Favourites";
-				element.style.textDecoration = "Underline";
-				var index = favourites_array.indexOf(ele);
+				var element = document.getElementById(id);
+				element.querySelector('.fav-class').innerText = "Add to Favourites";
+				element.querySelector('.fav-class').style.textDecoration = "Underline";
+				var index = favourites.indexOf(ele);
 				if(index > -1)
-					favourites_array.splice(index,1);
+					favourites.splice(index,1);
 			}
 		});
 		displayFavs();
 
 	};
 
+	//abstract details
+	var generateAbstractDetails = function(jsonData,id_link){
 
-function removeFavs(that){
-/*	MyApp.add(that.parentElement.id);
-	that.innerText = "Added to Favourites";
-	that.style.textDecoration = "none";*/
-	// MyApp.remove(that.parentElement.id);
-	removeFromFavs(that.parentElement.id.substring(5));
-	console.log("remove");
-}
+			var name = jsonData.name;
+			var about = jsonData.about;
+			var clickfunc;
+			if(id_link === 'page-ul')
+				clickfunc = 'onclick="addFavs(this)">Add to Favourites';
+			else
+				clickfunc ='onclick="removeFavs(this)">Remove from Favourites';
+
+			//html snippet to create lists
+			var hearder_html = '<div id="header"><h3>'+name+'</h3><p><span>About : </span>'+about+' </p></div>'
+			var body_html = '<div><div class="sub"><span>Category : </span>'+jsonData.category+'</div><div class="sub"><span>Likes: </span> '+jsonData.likes+'</div><div class="sub"><span> Website : </span> <a target="_blank" href="'+jsonData.website+'">'+jsonData.website+'</a></div></div>';		
+			var end_html = '<div class="hide-img"><p><span>Talking about this :</span>'+jsonData.talking_about_count+'</p><img src="'+jsonData.cover.source+'"></div>';
+			var more = '<a href="#" class="more fav-class"'+clickfunc+' </a> <a href="#" class="more" onclick="moreDetails(this);return false;">Find More</a>'
+			var html = hearder_html + body_html+end_html+more;
+
+			var element = document.createElement('li');
+			element.id = jsonData.id;
+			element.innerHTML = html;
+			document.getElementById(id_link).appendChild(element);
+	};
 
 		//Add to Favourites
 	var addToFavs = function(eid){
 		//Get the correct object from search results
-/*		var obj;
+		var obj;
 		searchResults.forEach(function(ele){
 			if(ele.id === eid ){
 				obj = ele;
 			}
-		});*/
-		fromFavourites = true;
-		 var url = 'https://graph.facebook.com/'+eid+'?callback=jsonpDetailed';
-		 makeJSONPRequest(url,"individual");	
+		});
 
-
+		//check if it's already present in favourites, if not there - add it.
+		if(!isObjectThere(obj.id,favourites)){
+			favourites.push(obj);
+		}
 	};
-	
-	function addFavs(that){
-		addToFavs(that.id.substring(5));
-		that.innerText = "Added to Favourites";
-		that.style.textDecoration = "none";
-	}
-	
+
 	var isObjectThere = function(id,arrOfObjs){
 		var isMatch = false;
 		arrOfObjs.forEach(function(ele){
@@ -131,238 +76,138 @@ function removeFavs(that){
 		return isMatch;
 	};
 
+/*	var displayArray = function(obj){
+		for(key in obj){
+			if(typeof obj[key] === "object")
+				displayArray(obj[key]);
+			else
+				console.log(key +"  "+obj[key]);
+		}
+	};
+*/
+	var displayFavs = function(){
+		// console.log("fav called");
+		var node = document.getElementById('page-ul-fav');
+		while (node.hasChildNodes()) {
+    		node.removeChild(node.lastChild);
+		}
+		favourites.forEach(function(obj){
+			generateAbstractDetails(obj,'page-ul-fav');
+		});
 
-//On load of page
-window.onload = function(){
+	};
 
-var submitButton = document.getElementById('submit');
-var searchFavLink = document.getElementById('searchfav');
-var favouriteLink = document.getElementById('favourite');
-var submitButton1 = document.getElementById('submit1');
+	//Events - search button
+	var buttonclk = function(){
+		var input_text = document.getElementById('search');
+		var input_text_value = input_text.value;
+		// var input_trim = input_text.value.replace(/\s+/g, '');
 
-searchFavLink.onclick = function(){
-	document.getElementById('page-abstract').className = "show";
-	document.getElementById('page-ul-fav').className = "hidden";
-	document.getElementById('searchfav').className = "hidden";
-	document.getElementById('favourite').className = "show";
+		//injecting script to the document 
+		// var script = document.createElement('script');
+		// script.src = "https://graph.facebook.com/search?="+input_trim+"?callback=jsonp";
 
-	var description = document.getElementById('desc');
-	description.innerHTML = "Search results...";
-	console.log('search');
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-favouriteLink.onclick = function(){
-	document.getElementById('page-abstract').className = "hidden";
-	document.getElementById('page-ul-fav').className = "show";
-	document.getElementById('searchfav').className = "show";
-	document.getElementById('favourite').className = "hidden";
-
-	var description = document.getElementById('desc');
-	description.innerHTML = "Favourites...";
-	console.log('favourite');
-
-	//added
-	displayFavs();
-}
-
-submitButton.onclick = function(){
-	var input_text = document.getElementById('search');
-	var input_text_value = input_text.value;
-	var pageAbstract = document.getElementById('page-abstract');
-	pageAbstract.className="show";
-	pageAbstract.innerHTML = "";
-
-	var access_token = "CAACEdEose0cBABHqwaydYcQ0jkZAKiF46YV6kf2zY1lzsYFZBnsjIZAEa07i0yrZCUZBAPSajCqjSgktIBCafAaFiemsgp1mathAF8lXXfziS5EXmKEPZBt51r2XwRH9MTE8fVNaEEeLij3UEGkF8SG8s0Ssh50aAqZCEpIteHtbpORwxbZA7AwFQqlnV54oVpwZD"; // my access token here
-	var url = "https://graph.facebook.com/search?type=page&q="+ input_text_value +"&access_token="+access_token+"&callback=jsonp&limit=5";
-
-	makeJSONPRequest(url,"search-callback");
-	input_text.value = "";
-	document.getElementById('searchfav').className = "hidden";
-	document.getElementById('favourite').className = "show";
-}
-
-}
-
-function makeJSONPRequest(url,name){
+		var access_token = "CAACEdEose0cBAIOjoEffuzMVopQiNJ5eUvFB1DpnA3VXqr5BtwRoZARoKxbALHfWymCG4UzYrMSfRr7RomlbfYHWZAGfEhQgGH9U3EH4lEmzl5tgLemSlWyFezMj6UUd5Y1lVLXYGGOHPPE1oVKhvKFpPOku0pQ9OzZChl1olXEqr1cvftl9qjuigmnftgZD"; // my access token here
+		var url = "https://graph.facebook.com/search?type=page&q="+ input_text_value +"&access_token="+access_token+"&callback=jsonp";
 		var script = document.createElement('script');
 		script.src = url;
 
+
 		//replacing the old script with new script incase of new request
-		var old_script = document.getElementById(name);
+		var old_script = document.getElementById('callback-script');
 		if(old_script){
 			document.getElementsByTagName('head')[0].replaceChild(script,old_script);
 		}
 		else{
 			document.getElementsByTagName('head')[0].appendChild(script);
 		}
-		script.id = name;	 
-}
+		script.id = "callback-script";
+		input_text.value = "";
+	};
 
-function jsonp(jsonData){
-	// console.log(jsonData.data[0].name);
+	//Global method used as callback
+	this.jsonp = function(jsonData) {
+		// console.log(jsonData);
 
-	createAbstractDetails(jsonData.data,'page-abstract');
-
-}
-
-function jsonpDetailed(jsonData){
-
-	if(fromFavourites){
-		// favourites_array.push(jsonData);
-		fromFavourites = false;
-		console.log(favourites_array);
-		//check if it's already present in favourites, if not there - add it.
-		if(!isObjectThere(jsonData.id,favourites_array)){
-			favourites_array.push(jsonData);
-		}
-	}else{
-
-		console.log(jsonData.id);
-		var element = document.getElementById('div'+jsonData.id);
-		var parentElement = document.getElementById(jsonData.id).parentElement;
-
-		if(jsonData.cover){
-			parentElement.style.height="500px";
-		}else{
-			parentElement.style.height="245px";
-		}
-
-		createDetailedDescription(jsonData);
-		
-	}
-	/*if(element){
-		element.style.display = "block";
-	}else{
-		createDetailedDescription(jsonData);
-	}*/
-
-
-}
-
-function createDetailedDescription(jsonData){
-	var aElement = document.getElementById(jsonData.id);
-	var name = jsonData.name||'"-"';
-	var about = jsonData.about||'"-"';
-	var website= jsonData.website||'"-"';
-
-	//aElement.style.display = 'none';
-	//html snippet to create lists
-	var title = '<div id="header"><h3>'+name+'</h3></div>';
-	var hearder_html = '<div><p><span>About : </span>'+about+' </p></div>';
-	var body_html = '<div><div class="sub"><span>Likes: </span> '+jsonData.likes+'</div><div class="sub"><span> Website : </span> <a target="_blank" href="'+website+'">'+website+'</a></div></div>';		
-	var end_html = '';
-	if(jsonData.cover){
-		end_html = '<div><p><span>Talking about this : </span>'+jsonData.talking_about_count+'</p><img src="'+jsonData.cover.source+'"></div>';
-		aElement.parentElement.style.height="500px";
-	}else{
-		aElement.parentElement.style.height="245px";
-	}
-	var more = '<a href="javascript:void(0);" class="more" onclick="hideImpl(this.parentElement)">show less</a>';
-	var html = hearder_html + body_html+end_html+more;//+more;
-
-
-	var element = document.createElement('div');
-	element.id = 'div'+jsonData.id;
-	element.innerHTML = html;
-	if(fromFavourites){
-		aElement = document.getElementById('page-ul-fav');
-	}
-	aElement.parentElement.appendChild(element);	
-
-	
-}
-
-function createAbstractLayout(ele,eleId){
-	var listHtml = "";
-	var pageAbstract = document.getElementById(eleId);
-	var description = document.getElementById('desc');
-	description.innerHTML = "Search results...";
-	// pageAbstract.innerHTML="";
-	var clickfunc = 'onclick="addFavs(this)">Add to Favourites';
-
-	var alink = '<a href="javascript:void(0);" id="'+ele.id+'" class="more-details">show more</a>';
-//	var favourites = '<div id="favouritesLink"><a href="javascript:void(0);" class="favouritesClass" id=fav'+ele.id+'>Add to Favourites</a></div>';
-	var favourites = '<a href="javascript:void(0);" id="alink'+ele.id+'" class="more fav-class"'+clickfunc+' </a> ';
-	listHtml = favourites+'<div><h3>'+ele.name+'</h3><p><span>Category : </span>'+ele.category+' </p></div>'+alink;
-
-	var element = document.createElement('li');
-	element.innerHTML = listHtml;	
-
-	pageAbstract.appendChild(element);
-}
-
-function createAbstractDetails(Objectslist,eleId){
-
-
-	if(Objectslist && Objectslist.length > 0){
-		Objectslist.forEach(function(ele){
-			createAbstractLayout(ele,eleId);
-
-		});
-
-
-		//Event listeners for more-details and Favourites
-		var elements = document.getElementsByClassName('more-details');
-		var favelements = document.getElementsByClassName('favouritesClass');
-
-		var handler = function(){
-			console.log(this.id);
-			document.getElementById(this.id).style.display = "none";
-			var url = 'https://graph.facebook.com/'+this.id+'?callback=jsonpDetailed';
-			makeJSONPRequest(url,"individual");
-		}
-
-		for (var i = 0; i < elements.length; ++i) {
-			elements[i].onclick = handler;
-		}
-
-/*		var favouritesHandler = function(){
-			console.log(this.id.substring(3) + " Favourites");
-			if(this.innerText === 'Add to Favourites'){
-				this.innerText = "Remove from Favourites";
-				console.log("inside favourites handler");
-			}else{
-				console.log("inside favourites handler");
+		//One way to distinguish Facebook pages from profiles
+		if(jsonData.likes){
+			if(!isObjectThere(jsonData.id,searchResults)){
+				generateAbstractDetails(jsonData,'page-ul');
+				searchResults.push(jsonData);
 			}
-			fromFavourites = true;
-			 var url = 'https://graph.facebook.com/'+this.id.substring(3)+'?callback=jsonpDetailed';
-			 makeJSONPRequest(url,"individual");
+		}else{
+			//throw new Error("Please search for Pages");
+			var ele = document.getElementById('error-msg');
+			ele.removeAttribute('class');
+			setTimeout(function(){
+				ele.className = 'disable';
+			},2000);
 		}
+	};
 
-		for (var i = 0; i < favelements.length; ++i) {
-			favelements[i].onclick = favouritesHandler;
-		}*/
-
-	}else{
-		//throw new Error("Please search for Pages");
-		var ele = document.getElementById('error-msg');
-		ele.removeAttribute('class');
-		setTimeout(function(){
-			ele.className = 'disable';
-		},2000);
+// Returning all the public methods 
+	return  {
+		init: init,
+		// display : displayArray,
+		add : addToFavs,
+		remove : removeFromFavs,
+		buttonclk: buttonclk,
+		displayFavs: displayFavs
 	}
-	
+
+})();
+
+//On load of page
+window.onload = function(){
+	MyApp.init();
+
+	//DOM events - Search Button
+	var button = document.getElementById('submit');
+	button.onclick = function(){
+		MyApp.buttonclk();
+	}
+}
+
+function moreDetails(that){
+ 	var parent_li = that.parentElement;
+ 	if(that.innerText ==='Find More'){
+		// parent_li.querySelector('.hide-img').removeAttribute('class');
+		parent_li.querySelector('.hide-img').style.display = "block";
+		parent_li.style.height = "455px";
+		that.innerText = "less";
+ 	}else{
+ 		// parent_li.className = 'hide-img';
+ 		parent_li.querySelector('.hide-img').style.display = "none";
+ 		parent_li.style.height = "200px";
+ 		that.innerText = "Find More";
+ 	}
 
 }
 
-function hideImpl(ele){
-	var aid = ele.getAttribute('id').substring(3);
-	// console.log(aid);
-	document.getElementById(aid).style.display="block";
-	ele.style.display = "none";
-	ele.parentElement.style.height = "140px";
+function viewFavourites(){
+	// console.log("View Favs");
+	document.querySelector('#page-ul').style.display = "none";
+	document.querySelector('#page-ul-fav').style.display = "block";
+	document.querySelector('#searchfav').style.textDecoration = "underline";
+	document.querySelector('#favourite').style.textDecoration = "none";
+	MyApp.displayFavs();
+}
+
+function addFavs(that){
+	MyApp.add(that.parentElement.id);
+	that.innerText = "Added to Favourites";
+	that.style.textDecoration = "none";
+}
+function removeFavs(that){
+/*	MyApp.add(that.parentElement.id);
+	that.innerText = "Added to Favourites";
+	that.style.textDecoration = "none";*/
+	MyApp.remove(that.parentElement.id);
+	console.log("remove");
+}
+function viewSearch(){
+	document.querySelector('#page-ul').style.display = "block";
+	document.querySelector('#page-ul-fav').style.display = "none";
+	document.querySelector('#searchfav').style.textDecoration = "none";
+	document.querySelector('#favourite').style.textDecoration = "underline";
 }

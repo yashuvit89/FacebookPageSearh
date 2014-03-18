@@ -27,21 +27,21 @@ body {
 	line-height: 30px;
 }
 
-#page-ul,#page-ul-fav{
+#page-ul,#page-ul-fav,#page-abstract{
 	list-style: none;
 }
 
-#page-ul li,#page-ul-fav li{
-	margin-bottom: 20px;
+#page-ul li,#page-ul-fav li,#page-abstract li{
+	margin-bottom: 10px;
 	border: 1px solid black;
-	height: 200px;
-	padding: 0px 30px;
+	height: 140px;
+	padding: 14px 0px 0px 40px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 	background-color: white;
 }
-#page-ul span,#page-ul-fav span{
+#page-ul span,#page-ul-fav span,#page-abstract span{
 	font-weight: bold;
 }
 /* #header{
@@ -53,8 +53,8 @@ body {
 	padding: 25px;
 }
 img{
-	width: 90%;
-	height: 100%;
+	width: 600px;
+	height: 220px;
 }
 
 #search {
@@ -83,7 +83,7 @@ img{
 #submit {
 	width: 120px;
 	height: 30px;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }
 #search-input {
 	padding: 20px 180px;
@@ -101,15 +101,31 @@ img{
 }
 
 #favourite,#searchfav{
-	margin-left: 35px;
-	font-size: 20px;
+	margin-left: 90px;
+	font-size: 18px;
 }
 
-#page-ul{
-}
-#page-ul-fav{
-	/*display: none;*/
-}
+
 .hidden{
 	display: none;
+}
+#desc {
+	font-size: 15px;
+	padding-left: 40px;
+	font-weight: bold;
+}
+.show{
+	display: block;
+}
+#favouritesLink {
+	float: right;
+	padding: 60px 35px 0px 0px;
+	font-size: 12px;
+}
+.more-details{
+	font-size: 12px;
+}
+
+#page-ul-fav li{
+	height: 200px;
 }
