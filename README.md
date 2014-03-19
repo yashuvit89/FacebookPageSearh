@@ -1,12 +1,14 @@
-Code Approach
- -  Used Module Pattern to organize code for better hiding of user data. Easy for code maintenance too.
-
-Functionalities Covered
- -   User can search for publicly available content from facebook using graph api.
-      Examples: search 
-            1. Sachin Tendulkar
-            2. Virat Kohli
-            3. Bruce Lee  and so on.
- -   User can favorite/ Unfavourite
- -   Page not found message if appropriate page is not available.
- -   User cannot add/search same page again, if it is already available in Search/ Favorite list.
+Application Info
+     Functionalities Covered
+     
+      	User Authentication to get access token.
+      	Facebook page search using facebook graph api. 
+      	User can favourite search results. 
+      	Redendancy check for user favourited list - user cannot add same result to favourites for the second time.
+		Local Storage for user's favourite list.      	
+     
+      Approach
+       
+      	No thridparty javascript library used.
+      	Module Pattern for easy code maintainability.
+      	JsonP approach to fetch fetch other domain information.

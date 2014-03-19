@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>ProjectPlace</title>
 </head>
-<script type="text/javascript" src="script1.js"></script>
+<script type="text/javascript" src="script.js"></script>
 <link rel="stylesheet" href="style.css">
 
   <body>
@@ -13,18 +13,31 @@
       <div id="banner-wrap" class="body">
         <strong>Facebook Page Search</strong>
       </div>
+   
 
     </header>
     <section id="main" class="body">
+  
+    	   <a href="index.html" id="home">Home</a>
+
       <div id="search-input">
         <input type="text" id="search" placeholder="Search Facebook pages">
         <input type="submit" id="submit" value="Search">
         <!-- <input type="submit" id="submit1" value="Individual"> -->
-        <span id="error-msg" class="disable">No page found!</span>              
-          <a href="#" class="hidden" id="searchfav">View Search</a>
+        <span id="error-msg" class="disable">No page found!</span>  
+        <div id="linksarea">
+           <a href="#" class="hidden" id="searchfav">View Search</a>
           <a href="#" id="favourite">View Favourites</a>
+        
+        </div>
+                    
 
         <hr>
+      </div>
+      <div id="pagination">
+      	<input type="button" value="previous" id="left" disabled>
+      	<input type="button" value="next" id="right" disabled>
+      
       </div>
       <div id="page-info">
         <div id="desc"></div>

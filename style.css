@@ -1,5 +1,7 @@
 body {
-	font: 14px/1.5 'Open Sans',sans-serif;
+
+	font-family: Helvetica, Arial, 'lucida grande',tahoma,verdana,arial,sans-serif;
+	font-size: 14px;
 	color: #4d4e53;
     margin: 0;
     padding: 0;
@@ -28,12 +30,13 @@ body {
 }
 
 #page-ul,#page-ul-fav,#page-abstract{
+	margin-top: 25px;
 	list-style: none;
 }
 
 #page-ul li,#page-ul-fav li,#page-abstract li{
 	margin-bottom: 10px;
-	border: 1px solid black;
+	border: 0px solid black;
 	height: 140px;
 	padding: 14px 0px 0px 40px;
 	-moz-border-radius: 5px;
@@ -49,7 +52,7 @@ body {
 } */
 .more{
 	font-size: 12px;
-	float: right;
+ 	float: right; 
 	padding: 25px;
 }
 img{
@@ -86,7 +89,7 @@ img{
 	margin-bottom: 10px;
 }
 #search-input {
-	padding: 20px 180px;
+	padding: 10px 180px;
 }
 .disable{
 	visibility: hidden;
@@ -102,7 +105,7 @@ img{
 
 #favourite,#searchfav{
 	margin-left: 90px;
-	font-size: 18px;
+	font-size: 16px;
 }
 
 
@@ -111,7 +114,7 @@ img{
 }
 #desc {
 	font-size: 15px;
-	padding-left: 40px;
+	padding-left: 250px;
 	font-weight: bold;
 }
 .show{
@@ -130,5 +133,27 @@ img{
 	height: 200px;
 }
 #access-app {
-	margin: 155px 0px 0px 285px;
+	margin: 64px 0px 80px 0px;
+	font-size: 20px;
+	text-align: center;
+}
+#pagination {
+	margin-bottom: 5px;
+}
+#pagination #left{
+	float: left;
+	margin-left:40px;
+}
+#pagination #right{
+	float: right;
+}
+#left, #right {
+	width: 100px;
+	height: 30px;
+}
+#linksarea{
+	margin-top:10px;
+}
+#app-info li{
+	line-height:22px;
 }

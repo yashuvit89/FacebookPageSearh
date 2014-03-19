@@ -16,8 +16,25 @@
     </header>
     <section id="main" class="body">
       <div id="access-app"> 
-      <h2><a href="https://graph.facebook.com/oauth/authorize?client_id=733382153373748&redirect_uri=http://projectplaceyaswanth-apcresource.rhcloud.com/index1.html&scope=read_stream&type=user_agent">Access Application</a></h2>
+      <h1><a href="https://graph.facebook.com/oauth/authorize?client_id=733382153373748&redirect_uri=http://projectplaceyaswanth-apcresource.rhcloud.com/index1.html&scope=read_stream&type=user_agent">Access App via Facebook</a></h1>
         
+      </div>
+      <div id="app-info">
+      <h2> Application Info</h2>
+     <h4>Functionalities Covered</h4> 
+      <ul>
+      	<li>User Authentication to get access token.</li>
+      	<li>Facebook page search using facebook graph api. </li>
+      	<li>User can favourite search results. </li>
+      	<li>Redendancy check for user favourited list - user cannot add same result to favourites for the second time.</li>
+		<li>Local Storage for user's favourite list.</li>      	
+      </ul>
+      <h4>Approach</h4> 
+       <ul>
+      	<li>No thridparty javascript library used.</li>
+      	<li>Module Pattern for easy code maintainability.</li>
+      	<li>JsonP approach to fetch fetch other domain information.</li>
+      </ul>
       </div>
  </section> 
   </body>
