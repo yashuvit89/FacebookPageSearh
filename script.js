@@ -178,7 +178,7 @@ var MyApp = (function(){
 				var favourites_string = localStorage.getItem('favourites');
 				var favourites_parsed = JSON.parse(favourites_string);
 			}
-			if(favourites_parsed.length >0){
+			if(favourites_parsed && favourites_parsed.length >0){
 				favourites_array = favourites_parsed;
 				displayFavs();
 			}else{
