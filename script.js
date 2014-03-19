@@ -428,5 +428,3 @@ var MyApp = (function(){
 	}
 	
 })();
-
-
